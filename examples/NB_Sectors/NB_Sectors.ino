@@ -12,7 +12,7 @@ const int nData = 200;
 // in 2D : nFeatures = 2 leads to 4 classes
 // in 3D : nFeatures = 3 leads to 8 classes
 // in 4D : nFeatures = 4 leads to 16 classes
-const int nFeatures = 2;
+const int nFeatures = 4;
 const uint8_t nClasses = 1 << nFeatures;
 
 uint8_t sector (std::vector<float>x) {
@@ -34,10 +34,7 @@ void setup() {
   for (int i = 0; i < nData; i++) {
     std::vector<float> x;
     for (int j = 0; j < nFeatures; j++) x.push_back(random(256) / 255.);
-    Data temp;
-    temp.In = x;
-    temp.Out = sector(x);
-    dataset.push_back(temp);
+    myNB.addData(x, sector(x), dataset);
   }
   myNB.fit(dataset);
 
