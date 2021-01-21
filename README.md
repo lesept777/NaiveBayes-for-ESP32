@@ -21,7 +21,11 @@ NB myNB(nData, nFeatures, nClasses);
 * `nData` is the size of the training dataset (number of samples)
 * `nFeatures` is the number of features of each training data
 * `nClasses` is the number of classes
-
+or
+```
+NB myNB(nData, nFeatures, nClasses, true);
+```
+the last argument is a boolean. If set to `true` each prediction is used to increase the size of the training dataset.
 
 ## Create a dataset
 
