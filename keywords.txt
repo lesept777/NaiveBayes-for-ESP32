@@ -1,0 +1,27 @@
+#######################################
+# Syntax Coloring Map For MLP
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+NB		KEYWORD1
+DATASET	KEYWORD1
+dataset	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+fit	KEYWORD2
+predict	KEYWORD2
+destroyDataset	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+Data	LITERAL1    
+nData	LITERAL1    
+nFeatures	LITERAL1
+nClasses	LITERAL1
