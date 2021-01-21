@@ -18,9 +18,10 @@ To declare an instance of the classifier. 2 possibilities:
 ```
 NB myNB(nData, nFeatures, nClasses);
 ```
-* `nData` is the size of the training dataset (number of samples)
-* `nFeatures` is the number of features of each training data
-* `nClasses` is the number of classes
+* `nData` is the size of the training dataset (number of samples),
+* `nFeatures` is the number of features of each training data,
+* `nClasses` is the number of classes.
+
 or
 ```
 NB myNB(nData, nFeatures, nClasses, true);
@@ -28,7 +29,14 @@ NB myNB(nData, nFeatures, nClasses, true);
 the last argument is a boolean. If set to `true` each prediction is used to increase the size of the training dataset.
 
 ## Create a dataset
-
+The dataset is a vector of `Data`, which is a `struct` defined as follows:
+```
+typedef struct
+{
+  std::vector<float> In; // vector of input data
+  uint8_t           Out; // output (class)
+} Data;
+```
 
 ## Fit the classifier
 .
