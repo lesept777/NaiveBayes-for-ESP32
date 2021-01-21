@@ -37,9 +37,28 @@ typedef struct
   uint8_t           Out; // output (class)
 } Data;
 ```
+To define the dataset, use
+```
+  std::vector<Data>dataset;
+```
+then fill in the dataset. For example:
+```
+  for (int i = 0; i < nData; i++) {
+    std::vector<float> x;
+    for (int j = 0; j < nFeatures; j++) x.push_back(/* the value of the feature */);
+    Data temp;
+    temp.In = x;
+    temp.Out = /* the value of the class */;
+    dataset.push_back(temp);
+  }
+```
 
 ## Fit the classifier
-.
+The method for fitting the classifier is:
+```
+  myNB.fit(dataset);
+```
+This enables to pre-process the dataset and prepare for prediction.
 
 ## Predict values
 The 
