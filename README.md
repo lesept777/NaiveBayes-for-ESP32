@@ -7,11 +7,13 @@ Naive Bayes classifiers are a set of supervised learning algorithms based on app
 
 This library implements a method of classifying a continuous input data into a set of categories (classes), using a set of training data (supervised learning).
 
+This work inspired by: [Naive Bayes classifier](https://remykarem.github.io/blog/naive-bayes) and [A Guide to the Naive Bayes Algorithm](https://www.analyticsvidhya.com/blog/2021/01/a-guide-to-the-naive-bayes-algorithm/)
+
 ## Dependencies
 * no dependency
 
 ## Quick start
-If you want to test it quickly, try the ["sectors" example](https://github.com/lesept777/NaiveBayes-for-ESP32/tree/master/examples/NB_Sectors)
+If you want to test it quickly, try the ["sectors" example](https://github.com/lesept777/NaiveBayes-for-ESP32/tree/master/examples/NB_Sectors).
 
 This example tries to classify n-dimension points in a [0-1]^n space in sectors, depending if the coordinates are lower or higher than 0,5.
 In 3D and above, this problem is hard to solve for a standard perceptron, but easily and quickly solved using this classifier. The Naive Bayes is still performant in higher dimensions, provided the training dataset in large enough.
@@ -30,10 +32,10 @@ or
 ```
 NB myNB(nData, nFeatures, nClasses, true);
 ```
-the last argument is a boolean. If set to `true` each prediction is used to increase the size of the training dataset, hopefully improving the prediction.
+the last argument is a boolean. If set to `true` each prediction is used to increase the size of the training dataset, hopefully improving the prediction performance.
 
 ## Create a dataset
-The dataset is a vector of `Data`, which is a `struct` defined as follows:
+The dataset is a vector](http://www.cplusplus.com/reference/vector/vector/) of `Data`, which is a `struct` defined as follows:
 ```
 typedef struct
 {
