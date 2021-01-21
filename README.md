@@ -7,12 +7,12 @@ Naive Bayes classifiers are a set of supervised learning algorithms based on app
 
 This library implements a method of classifying a continuous input data into a set of categories (classes), using a set of training data (supervised learning).
 
-This work is inspired by: [Naive Bayes classifier](https://remykarem.github.io/blog/naive-bayes) and [A Guide to the Naive Bayes Algorithm](https://www.analyticsvidhya.com/blog/2021/01/a-guide-to-the-naive-bayes-algorithm/)
+This work is inspired by: [Naive Bayes classifier](https://remykarem.github.io/blog/naive-bayes) and [A Guide to the Naive Bayes Algorithm](https://www.analyticsvidhya.com/blog/2021/01/a-guide-to-the-naive-bayes-algorithm/).
 
 ## Dependencies
 * no dependency
 
-## Quick start
+## Quick start for continuous data
 If you want to test it quickly, try the ["sectors" example](https://github.com/lesept777/NaiveBayes-for-ESP32/tree/master/examples/NB_Sectors).
 
 This example tries to classify n-dimension points in a [0-1]^n space in sectors, depending if the coordinates are lower or higher than 0,5.
