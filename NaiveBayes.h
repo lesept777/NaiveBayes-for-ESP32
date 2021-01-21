@@ -44,6 +44,7 @@ public:
 	NB  (int, int, int, bool);
 	NB  (int, int, int);
 	~NB ();
+	void     addData (std::vector<float> const&, uint8_t, std::vector<Data> &);
 	void     fit (std::vector<Data> &);
 	uint8_t  predict (std::vector<float> &, std::vector<Data> &);
 	void     destroyDataset (std::vector<Data> &);

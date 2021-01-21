@@ -14,6 +14,7 @@ dataset	KEYWORD1
 # Methods and Functions (KEYWORD2)
 #######################################
 
+addData	KEYWORD2
 fit	KEYWORD2
 predict	KEYWORD2
 destroyDataset	KEYWORD2

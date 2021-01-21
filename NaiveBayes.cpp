@@ -6,6 +6,7 @@
 	nData 	 : number of data in the dataset 
 	features : number of features
 	nClasses : number of classes
+	learn    : true if the prediction is added to the original dataset
 */
 NB::NB(int nData, int nFeatures, int nClasses, bool learn) {
 	_nFeatures = nFeatures;
@@ -24,12 +25,6 @@ NB::NB(int nData, int nFeatures, int nClasses) {
 
 NB::~NB() {
 }
-
-void NB::destroyDataset(std::vector<Data> &dataset) {
-	dataset.erase(dataset.begin(), dataset.end());
-    dataset.shrink_to_fit();
-}
-
 
 void NB::countDataset (std::vector<Data> const &dataset) {
 	for (int i = 0; i < _nClasses; i++) number.push_back(0);
@@ -93,6 +88,7 @@ uint8_t NB::findBestClass (std::vector<float> const &data, std::vector<Data> &da
 		int nOk = 0;
 		for (int i = 0; i < _nData; i++)
 			if (computeDistance(data, dataset, i) <= _radius && dataset[i].Out == classe) ++nOk;
+		// Bayes theorem:
 		float likelihood = (float)nOk / number[classe];
 		float priorProba = (float)number[classe] / _nData;
 		float postProba = likelihood * priorProba / marginal;
@@ -149,4 +145,17 @@ uint8_t NB::predict (std::vector<float> &data, std::vector<Data> &dataset) {
 	}
 
 	return best;
+}
+
+// Free the memory used by the dataset
+void NB::destroyDataset(std::vector<Data> &dataset) {
+	dataset.erase(dataset.begin(), dataset.end());
+    dataset.shrink_to_fit();
+}
+
+void NB::addData (std::vector<float> const&data, uint8_t out, std::vector<Data> &dataset) {
+	Data temp;
+    temp.In = data;
+    temp.Out = out;
+    dataset.push_back(temp);
 }

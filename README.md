@@ -5,7 +5,7 @@ Naive Bayes classification is described [here](https://en.wikipedia.org/wiki/Nai
 
 Naive Bayes classifiers are a set of supervised learning algorithms based on applying Bayes' theorem, but with strong independence assumptions between the features given the value of the class variable (hence naive).
 
-This library implements a method of classifying an input data into a set of categories (classes), using a set of training data (supervised learning).
+This library implements a method of classifying a continuous input data into a set of categories (classes), using a set of training data (supervised learning).
 
 ## Dependencies
 * no dependency
@@ -45,15 +45,13 @@ To define the dataset, use
 ```
   std::vector<Data>dataset;
 ```
-then fill in the dataset. For example:
+then fill in the dataset, using the method `addData`. For example:
 ```
   for (int i = 0; i < nData; i++) {
     std::vector<float> x;
     for (int j = 0; j < nFeatures; j++) x.push_back(/* the value of the j-th feature */);
-    Data temp;
-    temp.In = x;
-    temp.Out = /* the value of the class */;
-    dataset.push_back(temp);
+    uint8_t out = sector(x);
+    myNB.addData(x, out, dataset);
   }
 ```
 
