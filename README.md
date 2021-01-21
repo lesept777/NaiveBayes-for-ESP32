@@ -1,13 +1,13 @@
 # Naive Bayes classification for ESP32
 This library is designed to be used with the Arduino IDE.
 
-Naive Bayes classification is described [here](https://en.wikipedia.org/wiki/Naive_Bayes_classifier)
+Naive Bayes classification is described [here](https://en.wikipedia.org/wiki/Naive_Bayes_classifier).
 
 Naive Bayes classifiers are a set of supervised learning algorithms based on applying Bayes' theorem, but with strong independence assumptions between the features given the value of the class variable (hence naive).
 
 This library implements a method of classifying a continuous input data into a set of categories (classes), using a set of training data (supervised learning).
 
-This work inspired by: [Naive Bayes classifier](https://remykarem.github.io/blog/naive-bayes) and [A Guide to the Naive Bayes Algorithm](https://www.analyticsvidhya.com/blog/2021/01/a-guide-to-the-naive-bayes-algorithm/)
+This work is inspired by: [Naive Bayes classifier](https://remykarem.github.io/blog/naive-bayes) and [A Guide to the Naive Bayes Algorithm](https://www.analyticsvidhya.com/blog/2021/01/a-guide-to-the-naive-bayes-algorithm/)
 
 ## Dependencies
 * no dependency
