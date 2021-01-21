@@ -35,7 +35,7 @@ NB myNB(nData, nFeatures, nClasses, true);
 the last argument is a boolean. If set to `true` each prediction is used to increase the size of the training dataset, hopefully improving the prediction performance.
 
 ## Create a dataset
-The dataset is a vector](http://www.cplusplus.com/reference/vector/vector/) of `Data`, which is a `struct` defined as follows:
+The dataset is a [vector](http://www.cplusplus.com/reference/vector/vector/) of `Data`, which is a `struct` defined as follows:
 ```
 typedef struct
 {
