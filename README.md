@@ -1,7 +1,7 @@
 # Naive Bayes classification for ESP32
 This library is designed to be used with the Arduino IDE.
 
-
+Naive Bayes classification is described [here](https://en.wikipedia.org/wiki/Naive_Bayes_classifier)
 
 ## Dependencies
 * no dependency
