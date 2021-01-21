@@ -3,6 +3,10 @@ This library is designed to be used with the Arduino IDE.
 
 Naive Bayes classification is described [here](https://en.wikipedia.org/wiki/Naive_Bayes_classifier)
 
+Naive Bayes classifiers are a set of supervised learning algorithms based on applying Bayes' theorem, but with strong independence assumptions between the features given the value of the class variable (hence naive).
+
+This library implements a method of classifying an input data into a set of categories (classes), using a set of training data (supervised learning).
+
 ## Dependencies
 * no dependency
 
