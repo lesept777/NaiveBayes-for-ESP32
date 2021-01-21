@@ -61,4 +61,16 @@ The method for fitting the classifier is:
 This enables to pre-process the dataset and prepare for prediction.
 
 ## Predict values
-The 
+To predict a class, first create a features vector:
+```
+    std::vector<float> x;
+    for (int j = 0; j < nFeatures; j++) x.push_back(/* the value of the feature */);
+```
+Then call the `predict`method:
+```
+uint8_t predict = myNB.predict(x, dataset);
+```
+At the end, it is possible to free the memory occupied by the dataset, using
+```
+  myNB.destroyDataset (dataset);
+```
