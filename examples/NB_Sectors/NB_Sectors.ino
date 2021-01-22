@@ -23,7 +23,6 @@ uint8_t sector (std::vector<float>x) {
   return nClass;
 }
 
-
 void setup() {
   Serial.begin(115200);
   std::vector<Data>dataset;
@@ -52,5 +51,4 @@ void setup() {
   myNB.destroyDataset (dataset);
 }
 
-void loop() {
-}
+void loop() {}
