@@ -1,0 +1,63 @@
+/*
+   Naive Bayes algorithm implementation for the 
+   classification of categorical data
+
+   (c) Lesept, January 2021
+*/
+#include "NaiveBayes.h"
+const int nData = 10;
+const int nFeatures = 2;
+const uint8_t nClasses = 2;
+
+// enum features {OS, DL_framework};
+enum OS {MacOS, Linux, Windows};
+enum DL_framework {Tensorflow, Keras, Pytorch};
+enum Classes {KFC, McDo};
+
+void setup() {
+  Serial.begin(115200);
+  std::vector<Data>dataset;
+  NB myNB(nData, nFeatures, nClasses);
+  // create the dataset:
+  uint8_t x[3] = {MacOS, Tensorflow, KFC};
+  myNB.addDataCat(x, dataset);
+//
+//  x.push_back({Linux, Keras});
+//  myNB.addData(x, KFC, dataset);
+//
+//  x.push_back({Linux, Tensorflow});
+//  myNB.addData(x, McDo, dataset);
+//
+//  x.push_back({MacOS, Keras});
+//  myNB.addData(x, KFC, dataset);
+//
+//  x.push_back({Linux, Keras});
+//  myNB.addData(x, KFC, dataset);
+//
+//  x.push_back({Windows, Keras});
+//  myNB.addData(x, KFC, dataset);
+//
+//  x.push_back({MacOS, Pytorch});
+//  myNB.addData(x, McDo, dataset);
+//
+//  x.push_back({Windows, Pytorch});
+//  myNB.addData(x, McDo, dataset);
+//
+//  x.push_back({Linux, Keras});
+//  myNB.addData(x, KFC, dataset);
+//
+//  x.push_back({MacOS, Pytorch});
+//  myNB.addData(x, KFC, dataset);
+//
+  myNB.fitCat(dataset);
+
+  // Test 
+  std::vector<uint8_t> x;
+  x.push_back({MacOS, Pytorch});
+  uint8_t predict = myNB.predictCat(x, dataset);
+  Serial.printf("Prediction %d\n", predict);
+  myNB.destroyDataset (dataset);
+}
+
+void loop() {
+}
