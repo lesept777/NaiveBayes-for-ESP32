@@ -71,11 +71,8 @@ float NB::computeDistance(std::vector<float> const &data, std::vector<Data> cons
 // Returns the number of data elements in the neighbourhood
 int NB::countNeighbours(std::vector<float> const &data, std::vector<Data> const &dataset) {
 	int neighbours = 0;
-	for (int i = 0; i < _nData; i++) {
-		if (computeDistance(data, dataset, i) <= _radius) {
-		 ++neighbours;
-		}
-	}
+	for (int i = 0; i < _nData; i++)
+		if (computeDistance(data, dataset, i) <= _radius) ++neighbours;
 	return neighbours;
 }
 
@@ -123,7 +120,7 @@ uint8_t NB::predict (std::vector<float> &data, std::vector<Data> &dataset) {
 
 	// 1: search a valid neighbourhood
 	const int minNeighbours = _nData / 13;
-	_radius = 0.35;
+	_radius = 0.05;
 	_neighbours = countNeighbours(data, dataset);
 	while (_neighbours < minNeighbours) {
 		_radius += 0.05;
@@ -134,7 +131,7 @@ uint8_t NB::predict (std::vector<float> &data, std::vector<Data> &dataset) {
 	int best = findBestClass (data, dataset);
 
 	// 3: add the new data to the dataset 
-	// does not improve learning, but I tried...
+	// does not always improve learning...
 	if (_learn) {
 		Data temp;
 		temp.In = data;
