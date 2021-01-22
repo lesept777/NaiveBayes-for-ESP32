@@ -32,6 +32,9 @@
 
 #include <Arduino.h>
 
+#define MIN_float      -HUGE_VAL
+#define MAX_float      +HUGE_VAL
+
 typedef struct
 {
 	std::vector<float> In; // vector of input data
@@ -45,15 +48,20 @@ public:
 	NB  (int, int, int);
 	~NB ();
 	void     addData (std::vector<float> const&, uint8_t, std::vector<Data> &);
-	void     fit (std::vector<Data> &);
+	void     addDataCat (std::vector<uint8_t> const&, std::vector<Data> &);
+	void     fit     (std::vector<Data> &);
 	uint8_t  predict (std::vector<float> &, std::vector<Data> &);
+	uint8_t  predictCat (std::vector<uint8_t> const&, std::vector<Data> const&);
 	void     destroyDataset (std::vector<Data> &);
 
 private:
 	std::vector<float>valMin;
 	std::vector<float>valMax;
 	std::vector<int>  number;
-	int      _nData, _nFeatures, _nClasses, _neighbours;
+	std::vector<std::vector<uint8_t>> _catMatrix;
+	std::vector<std::vector<float>> _probaFeatures;
+	std::vector<float> _probaClasses;
+	int      _nData, _nFeatures, _nClasses, _neighbours, _maxFeature;
 	float    _radius;
 	bool     _learn;
 	int      createDataset    (std::vector<Data>);

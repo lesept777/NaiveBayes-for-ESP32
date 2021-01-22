@@ -1,6 +1,4 @@
 #include "NaiveBayes.h"
-#define MIN_float      -HUGE_VAL
-#define MAX_float      +HUGE_VAL
 
 /* constructor:
 	nData 	 : number of data in the dataset 
@@ -13,12 +11,14 @@ NB::NB(int nData, int nFeatures, int nClasses, bool learn) {
 	_nClasses  = nClasses;
 	_nData     = nData;
 	_learn     = learn;
+	_maxFeature = 0;
 }
 NB::NB(int nData, int nFeatures, int nClasses) {
 	_nFeatures = nFeatures;
 	_nClasses  = nClasses;
 	_nData     = nData;
 	_learn     = false;
+	_maxFeature = 0;
 }
 
 /*   PRIVATE METHODS   */
@@ -153,9 +153,68 @@ void NB::destroyDataset(std::vector<Data> &dataset) {
     dataset.shrink_to_fit();
 }
 
-void NB::addData (std::vector<float> const&data, uint8_t out, std::vector<Data> &dataset) {
+// Add a data to the current dataset
+void NB::addData (std::vector<float> const &data, uint8_t out, std::vector<Data> &dataset) {
 	Data temp;
     temp.In = data;
     temp.Out = out;
     dataset.push_back(temp);
+}
+
+// Add a data to the current dataset
+void NB::addDataCat (std::vector<uint8_t> const &data, std::vector<Data> &dataset) {
+	Data temp;
+	for (int i = 0; i < _nFeatures; i++) {
+		if (data[i] > _maxFeature) _maxFeature = data[i];
+		temp.In.push_back((float)data[i]);
+	}
+    temp.Out = data[_nFeatures];
+    dataset.push_back(temp);
+    int n = dataset.size();
+    // Serial.printf("data %d : %f %f %d max %d\n", n-1,dataset[n-1].In[0],dataset[n-1].In[1],dataset[n-1].Out, _maxFeature);
+}
+
+//
+uint8_t  NB::predictCat (std::vector<uint8_t> const &data, std::vector<Data> const &dataset) {
+	uint8_t bestClass = 255;
+	float bestProba = 0.0f;
+	//
+	Serial.print("\nFeatures : {");
+	for (int i = 0; i < _nFeatures; i++) Serial.printf(" %d ", data[i]);
+	Serial.println("}");
+
+	// Proba of each class
+	std::vector<uint8_t>nbClasses(_nClasses,0);
+	for (int k = 0; k < _nData; k++) ++nbClasses[dataset[k].Out];
+
+	// proba of each feature of the data for all classes
+	std::vector<std::vector<uint8_t>> catMatrix(_nFeatures , std::vector<uint8_t>(_nClasses, 0));
+	for (int i = 0; i < _nFeatures; i++) {
+		for (int k = 0; k < _nData; k++) {
+			if ((uint8_t)dataset[k].In[i] == data[i]) ++catMatrix[i][dataset[k].Out];
+		}
+	}
+
+
+	// Compute denominator
+	float sum = 0.0f;
+	for (int j = 0; j < _nClasses; j++) {
+		float prod = (float)nbClasses[j] / _nData;
+		for (int i = 0; i < _nFeatures; i++) prod *= (float)catMatrix[i][j] / nbClasses[j];
+		sum += prod;
+	}
+
+	// Compute probability for each class
+	for (int j = 0; j < _nClasses; j++) {
+		float prod = (float)nbClasses[j] / _nData;
+		for (int i = 0; i < _nFeatures; i++) prod *= (float)catMatrix[i][j] / nbClasses[j];
+		float proba = prod / sum;
+		Serial.printf("Class %d : probability %6.2f%%\n", j, proba * 100.0f);
+		if (proba > bestProba) {
+			bestProba = proba;
+			bestClass = j;
+		}
+	}
+
+	return bestClass;
 }

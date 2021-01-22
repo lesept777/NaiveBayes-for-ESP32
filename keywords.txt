@@ -15,8 +15,10 @@ dataset	KEYWORD1
 #######################################
 
 addData	KEYWORD2
+addDataCat	KEYWORD2
 fit	KEYWORD2
 predict	KEYWORD2
+predictCat	KEYWORD2
 destroyDataset	KEYWORD2
 
 #######################################
