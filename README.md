@@ -21,7 +21,7 @@ In 3D and above, this problem is hard to solve for a standard perceptron, but ea
 ## Quick start for categorical data
 If you want to test it quickly, try the ["MacDo" example](https://github.com/lesept777/NaiveBayes-for-ESP32/tree/master/examples/NB_MacDo).
 
-This example shows how to classify a set of categorical data and classify new data. The features of the training data are categorized in a limited set of values. There are 2 features,collected data from 10 engineers: what OS (macOS, Linux or Windows) and deep learning framework (TensorFlow, Keras or PyTorch) they use. The class is their favourite fast food (KFC or McD). The task is to predict the favorite fast-food restaurant of a person, knowing its OS and preferred DL framework...
+This example shows how to classify a set of categorical data and classify new data. The features of the training data are categorized in a limited set of values. There are 2 features, collected from 10 engineers: what OS (macOS, Linux or Windows) and deep learning framework (TensorFlow, Keras or PyTorch) they use. The class is their favourite fast-food (KFC or McDo). The task is to predict the favorite fast-food restaurant of a person, knowing its OS and preferred DL framework...
 
 # Guidelines
 ## Declare an instance
