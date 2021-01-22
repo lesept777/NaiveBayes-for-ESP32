@@ -5,7 +5,7 @@ Naive Bayes classification is described [here](https://en.wikipedia.org/wiki/Nai
 
 Naive Bayes classifiers are a set of supervised learning algorithms based on applying Bayes' theorem, but with strong independence assumptions between the features given the value of the class variable (hence naive).
 
-This library implements a method of classifying a *categorical* or *continuous* input data into a set of categories (classes), using a set of training data.
+This library implements a method of classifying a *categorical* or *continuous* input data into a set of classes, using a set of training data.
 
 This work is inspired by: [Naive Bayes classifier](https://remykarem.github.io/blog/naive-bayes) and [A Guide to the Naive Bayes Algorithm](https://www.analyticsvidhya.com/blog/2021/01/a-guide-to-the-naive-bayes-algorithm/).
 
@@ -19,9 +19,9 @@ This example tries to classify n-dimension points in a [0-1]^n space in sectors,
 In 3D and above, this problem is hard to solve for a standard perceptron, but easily and quickly solved using this classifier. The Naive Bayes is still performant in higher dimensions, provided the training dataset in large enough.
 
 ## Quick start for categorical data
-If you want to test it quickly, try the ["sectors" example](https://github.com/lesept777/NaiveBayes-for-ESP32/tree/master/examples/NB_MacDo).
+If you want to test it quickly, try the ["MacDo" example](https://github.com/lesept777/NaiveBayes-for-ESP32/tree/master/examples/NB_MacDo).
 
-This example shows how to classify a set of categorical data and predict the classification of other data. The features of the training data are categorized in a limited set of values.
+This example shows how to classify a set of categorical data and classify new data. The features of the training data are categorized in a limited set of values. There are 2 features,collected data from 10 engineers: what OS (macOS, Linux or Windows) and deep learning framework (TensorFlow, Keras or PyTorch) they use. The class is their favourite fast food (KFC or McD). The task is to predict the favorite fast-food restaurant of a person, knowing its OS and preferred DL framework...
 
 # Guidelines
 ## Declare an instance
