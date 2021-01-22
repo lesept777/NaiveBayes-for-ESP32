@@ -75,6 +75,7 @@ or within a loop, using a creation function:
     myNB.addDataCat(x, dataset);
   }
 ```
+or even read the dataset from a file stored in SPIFFS.
 
 ## Fit the classifier
 For continuous data, the method for fitting the classifier is:
