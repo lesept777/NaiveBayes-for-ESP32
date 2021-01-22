@@ -161,9 +161,9 @@ void NB::addData (std::vector<float> const &data, uint8_t out, std::vector<Data>
 // Add a data to the current dataset
 void NB::addDataCat (std::vector<uint8_t> const &data, std::vector<Data> &dataset) {
 	Data temp;
-	for (int i = 0; i < _nFeatures; i++) {
-		if (data[i] > _maxFeature) _maxFeature = data[i];
-		temp.In.push_back((float)data[i]);
+	for (uint8_t x : data) { // Range-based for loop (fun :)
+		if (x > _maxFeature) _maxFeature = x;
+		temp.In.push_back((float)x);
 	}
     temp.Out = data[_nFeatures];
     dataset.push_back(temp);
@@ -177,12 +177,12 @@ uint8_t  NB::predictCat (std::vector<uint8_t> const &data, std::vector<Data> con
 	float bestProba = 0.0f;
 	//
 	Serial.print("\nFeatures : {");
-	for (int i = 0; i < _nFeatures; i++) Serial.printf(" %d ", data[i]);
+	for (uint8_t x : data) Serial.printf(" %d ", x);
 	Serial.println("}");
 
 	// Proba of each class
 	std::vector<uint8_t>nbClasses(_nClasses,0);
-	for (int k = 0; k < _nData; k++) ++nbClasses[dataset[k].Out];
+	for (Data x : dataset) ++nbClasses[x.Out];
 
 	// proba of each feature of the data for all classes
 	std::vector<std::vector<uint8_t>> catMatrix(_nFeatures , std::vector<uint8_t>(_nClasses, 0));
