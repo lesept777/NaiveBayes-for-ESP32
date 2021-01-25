@@ -125,6 +125,7 @@ For now, 4 examples are provided.
 An example on how to categorize 3D points (continuous data) in classes depending on their coordinates.
 
 ## NB_MacDo
+An example on how to categorize catagorical data. Estimate the favorite fast-food of a person knowing his preferred OS and machine learning framework...
 
 ## NB_MacDoGauss
 An example on how to categorize continuous data using Gaussian probability.
