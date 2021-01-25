@@ -112,3 +112,14 @@ At the end, it is possible to free the memory occupied by the dataset, using
 ```
   myNB.destroyDataset (dataset);
 ```
+
+# Examples
+For now, 3 examples are provided.
+## NB_sectors
+An example on how to categorize 3D points (continuous data) in classes depending on their coordinates.
+
+## NB_MacDo
+An example on how to categorize discrete data.
+
+## NB_TTGO
+If you have a TTGO T-Display, you can try this example to see the impact of the size of the training dataset on the classifiation performance (success rate). It graphically shows that the classification of 2D points in N sectors has varrying performance if the dataset is smaller and if the number of sectors grows.
