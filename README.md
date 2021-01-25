@@ -52,7 +52,7 @@ To define the dataset, use
 ```
   std::vector<Data>dataset;
 ```
-then fill in the dataset, using the method `addData` in the case of continuous data. For example:
+then fill in the dataset, using the method `addData` in the case of **continuous data**. For example:
 ```
   for (int i = 0; i < nData; i++) {
     std::vector<float> x;
