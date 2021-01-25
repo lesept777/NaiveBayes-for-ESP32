@@ -132,3 +132,5 @@ An example on how to categorize continuous data using Gaussian probability.
 
 ## NB_TTGO
 If you have a TTGO T-Display, you can try this example to see the impact of the size of the training dataset on the classifiation performance (success rate). It graphically shows that the classification of 2D points in N sectors has varrying performance if the dataset is smaller and if the number of sectors grows.
+
+Use buttons to change the size of the dataset and the number of sectors, touch GPIO 15 to rerun the current case.
