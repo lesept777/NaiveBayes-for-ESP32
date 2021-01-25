@@ -161,8 +161,8 @@ void NB::destroyDataset(std::vector<Data> &dataset) {
 // containing the features and the class
 void NB::addData (std::vector<float> const &data, std::vector<Data> &dataset) {
 	Data temp;
-    temp.Out = data.back();  // get the class first (last element of the vector)
-    temp.In = data;          // the get the features
+    temp.Out = (uint8_t)data.back();  // get the class first (last element of the vector)
+    temp.In = data;                   // then get the features
     dataset.push_back(temp);
 }
 

@@ -62,9 +62,10 @@ then fill in the dataset, using the method `addData` in the case of **continuous
   }
 ```
 
-For categorical data, another way to do it is possible, by calling the `addDataCat` method. It takes as arguments a vector of bytes (`uint8_t`) and the dataset created before. You can either use it as follows:
+Another way to do it is possible, by providing a vector which contains both the features and the class. For continuous data, call `addData` method as well. For categorical data, call the `addDataCat` method. It takes as arguments a vector of bytes (`uint8_t`) and the dataset created before. You can either use it as follows:
 ```
-myNB.addDataCat ({ feature_1, feature2, ... feature_n, class}, dataset);
+myNB.addData ({ feature_1, feature2, ... feature_n, class}, dataset); // all floats
+myNB.addDataCat ({ feature_1, feature2, ... feature_n, class}, dataset); // all uint8_t
 ```
 or within a loop, using a creation function:
 ```
