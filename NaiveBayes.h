@@ -48,19 +48,18 @@ public:
 	NB  (int, int, int);
 	~NB ();
 	void     addData (std::vector<float> const&, uint8_t, std::vector<Data> &);
+	void     addData (std::vector<float> const&, std::vector<Data> &);
 	void     addDataCat (std::vector<uint8_t> const&, std::vector<Data> &);
 	void     fit     (std::vector<Data> &);
 	uint8_t  predict (std::vector<float> &, std::vector<Data> &);
 	uint8_t  predictCat (std::vector<uint8_t> const&, std::vector<Data> const&);
+	uint8_t  predictGau (std::vector<uint8_t> const&, std::vector<Data> const&);
 	void     destroyDataset (std::vector<Data> &);
 
 private:
 	std::vector<float>valMin;
 	std::vector<float>valMax;
 	std::vector<int>  number;
-	std::vector<std::vector<uint8_t>> _catMatrix;
-	std::vector<std::vector<float>> _probaFeatures;
-	std::vector<float> _probaClasses;
 	int      _nData, _nFeatures, _nClasses, _neighbours, _maxFeature;
 	float    _radius;
 	bool     _learn;
@@ -70,6 +69,7 @@ private:
 	inline float computeDistance  (std::vector<float> const&, std::vector<Data> const&, int);
 	int      countNeighbours  (std::vector<float> const&, std::vector<Data> const&);
 	uint8_t  findBestClass    (std::vector<float> const&, std::vector<Data> &);
+	float    gaussProb        (float, float, float);
 };
 
 #endif
