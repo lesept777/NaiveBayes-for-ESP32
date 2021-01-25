@@ -83,14 +83,14 @@ void naiveBayes() {
     if (n == predict) {
       ++nOk;
       tft.drawPixel(x, y, TFT_GREEN); // draw green pixel if correct
-      tft.drawPixel(x-1, y, TFT_GREEN); // draw green pixel if correct
-      tft.drawPixel(x, y-1, TFT_GREEN); // draw green pixel if correct
-      tft.drawPixel(x-1, y-1, TFT_GREEN); // draw green pixel if correct
+      tft.drawPixel(x - 1, y, TFT_GREEN); // draw green pixel if correct
+      tft.drawPixel(x, y - 1, TFT_GREEN); // draw green pixel if correct
+      tft.drawPixel(x - 1, y - 1, TFT_GREEN); // draw green pixel if correct
     } else {
       tft.drawPixel(x, y, TFT_RED); // and red if not
-      tft.drawPixel(x-1, y, TFT_RED); // and red if not
-      tft.drawPixel(x, y-1, TFT_RED); // and red if not
-      tft.drawPixel(x-1, y-1, TFT_RED); // and red if not
+      tft.drawPixel(x - 1, y, TFT_RED); // and red if not
+      tft.drawPixel(x, y - 1, TFT_RED); // and red if not
+      tft.drawPixel(x - 1, y - 1, TFT_RED); // and red if not
     }
   }
   Serial.printf("%d classes, %d data : success rate %6.2f%%\n", nClasses, nData, nOk * 100.0f / nPred);
@@ -123,6 +123,12 @@ void loop() {
     if (nClasses < 2) nClasses = 2;
     calc = true;
   }
+  // Touch GPIO 15 to run the same case
+  const int touchPin = 15;
+  const int threshold = 90;
+  if (touchRead(touchPin) < threshold) calc = true;
+
+
   if (calc) {
     initTFT();
     naiveBayes();
