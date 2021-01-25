@@ -64,8 +64,8 @@ then fill in the dataset, using the method `addData` in the case of **continuous
 
 Another way to do it is possible, by providing a vector which contains both the features and the class. For continuous data, call `addData` method as well. For categorical data, call the `addDataCat` method. It takes as arguments a vector of bytes (`uint8_t`) and the dataset created before. You can either use it as follows:
 ```
-myNB.addData ({ feature_1, feature2, ... feature_n, class}, dataset); // all floats
-myNB.addDataCat ({ feature_1, feature2, ... feature_n, class}, dataset); // all uint8_t
+myNB.addData ({feature_1, feature2, ... feature_n, class}, dataset); // all floats
+myNB.addDataCat ({feature_1, feature2, ... feature_n, class}, dataset); // all uint8_t
 ```
 or within a loop, using a creation function:
 ```
@@ -79,16 +79,16 @@ or within a loop, using a creation function:
 or even read the dataset from a file stored in SPIFFS.
 
 ## Fit the classifier
-For continuous data, the method for fitting the classifier is:
+For **continuous data**, the method for fitting the classifier is:
 ```
   myNB.fit(dataset);
 ```
 This enables to pre-process the dataset and prepare for prediction.
 
-For categorical data, there is no need to pre-process the dataset.
+For **categorical data**, there is no need to pre-process the dataset.
 
 ## Predict values
-For continuous data: to predict a class, first create a features vector:
+For **continuous data**: to predict a class, first create a features vector:
 ```
     std::vector<float> x;
     for (int j = 0; j < nFeatures; j++) x.push_back(/* the value of the j-th feature */);
@@ -97,8 +97,13 @@ Then call the `predict`method:
 ```
 uint8_t predict = myNB.predict(x, dataset);
 ```
+You can choose to use Gaussian probabality hypothesis and call
+```
+uint8_t predict = myNB.predictGau(x, dataset);
+```
 
-For categorical data, either create a vector of `uint8_t`containing the features to be classified
+
+For **categorical data**, either create a vector of `uint8_t`containing the features to be classified
 ```
     std::vector<uint8_t> x(nFeatures, 0);
     for (int j = 0; j < nFeatures; j++) x[i] = /* i-th feature */;
@@ -115,12 +120,14 @@ At the end, it is possible to free the memory occupied by the dataset, using
 ```
 
 # Examples
-For now, 3 examples are provided.
+For now, 4 examples are provided.
 ## NB_sectors
 An example on how to categorize 3D points (continuous data) in classes depending on their coordinates.
 
 ## NB_MacDo
-An example on how to categorize discrete data.
+
+## NB_MacDoGauss
+An example on how to categorize continuous data using Gaussian probability.
 
 ## NB_TTGO
 If you have a TTGO T-Display, you can try this example to see the impact of the size of the training dataset on the classifiation performance (success rate). It graphically shows that the classification of 2D points in N sectors has varrying performance if the dataset is smaller and if the number of sectors grows.
