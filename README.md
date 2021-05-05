@@ -97,7 +97,7 @@ Then call the `predict`method:
 ```
 uint8_t predict = myNB.predict(x, dataset);
 ```
-You can choose to use Gaussian probabality hypothesis and call
+You can choose to use Gaussian probability hypothesis and call
 ```
 uint8_t predict = myNB.predictGau(x, dataset);
 ```
