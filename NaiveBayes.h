@@ -52,7 +52,8 @@ public:
 	void     addDataCat (std::vector<uint8_t> const&, std::vector<Data> &);
 	void     fit     (std::vector<Data> &);
 	uint8_t  predict (std::vector<float> &, std::vector<Data> &);
-	uint8_t  predictCat (std::vector<uint8_t> const&, std::vector<Data> const&);
+	uint8_t  predictCat (std::vector<uint8_t> &, std::vector<Data> const&);
+	uint8_t  predictCatFit (std::vector<uint8_t> &, std::vector<Data> const&);
 	uint8_t  predictGau (std::vector<uint8_t> const&, std::vector<Data> const&);
 	void     destroyDataset (std::vector<Data> &);
 

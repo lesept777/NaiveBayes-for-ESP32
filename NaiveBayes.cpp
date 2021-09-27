@@ -184,12 +184,12 @@ void NB::addDataCat (std::vector<uint8_t> const &data, std::vector<Data> &datase
 	}
     temp.Out = data[_nFeatures];
     dataset.push_back(temp);
-    int n = dataset.size();
+    // int n = dataset.size();
     // Serial.printf("data %d : %f %f %d max %d\n", n-1,dataset[n-1].In[0],dataset[n-1].In[1],dataset[n-1].Out, _maxFeature);
 }
 
 // Predict a class for categorical data
-uint8_t  NB::predictCat (std::vector<uint8_t> const &data, std::vector<Data> const &dataset) {
+uint8_t  NB::predictCat (std::vector<uint8_t> &data, std::vector<Data> const &dataset) {
 	uint8_t bestClass = 255;
 	float bestProba = 0.0f;
 	//
@@ -198,11 +198,60 @@ uint8_t  NB::predictCat (std::vector<uint8_t> const &data, std::vector<Data> con
 	Serial.println("}");
 
 	// Proba of each class
-	std::vector<uint8_t>nbClasses(_nClasses,0);
+	std::vector<uint16_t>nbClasses(_nClasses,0);
 	for (Data x : dataset) ++nbClasses[x.Out];
 
 	// proba of each feature of the data for all classes
-	std::vector<std::vector<uint8_t>> catMatrix(_nFeatures , std::vector<uint8_t>(_nClasses, 0));
+	std::vector<std::vector<uint16_t>> catMatrix(_nFeatures , std::vector<uint16_t>(_nClasses, 0));
+	for (int i = 0; i < _nFeatures; i++) {
+		for (int k = 0; k < _nData; k++) {
+			if ((uint8_t)dataset[k].In[i] == data[i]) ++catMatrix[i][dataset[k].Out];
+		}
+	}
+
+	// Compute denominator
+	float sum = 0.0f;
+	for (int j = 0; j < _nClasses; j++) {
+		float prod = (float)nbClasses[j] / _nData;
+		for (int i = 0; i < _nFeatures; i++) prod *= (float)catMatrix[i][j] / nbClasses[j];
+		sum += prod;
+	}
+
+	// Compute probability for each class
+	for (int j = 0; j < _nClasses; j++) {
+		float prod = (float)nbClasses[j] / _nData;
+		for (int i = 0; i < _nFeatures; i++) prod *= (float)catMatrix[i][j] / nbClasses[j];
+		float proba = prod / sum;
+		Serial.printf("Class %d : probability %6.2f%%\n", j, proba * 100.0f);
+		if (proba > bestProba) {
+			bestProba = proba;
+			bestClass = j;
+		}
+	}
+
+	return bestClass;
+}
+
+// Predict a class for categorical data with fitting
+uint8_t  NB::predictCatFit (std::vector<uint8_t> &data, std::vector<Data> const &dataset) {
+	uint8_t bestClass = 255;
+	float bestProba = 0.0f;
+	//
+	Serial.print("\nFeatures : {");
+	for (uint8_t x : data) Serial.printf(" %d ", x);
+	Serial.println("}");
+
+	// Normalize data
+	for (int i = 0; i < _nFeatures; i++)
+		data[i] = (data[i] - valMin[i]) /
+			(valMax[i] - valMin[i]);
+
+	// Proba of each class
+	std::vector<uint16_t>nbClasses(_nClasses,0);
+	for (Data x : dataset) ++nbClasses[x.Out];
+
+	// proba of each feature of the data for all classes
+	std::vector<std::vector<uint16_t>> catMatrix(_nFeatures , std::vector<uint16_t>(_nClasses, 0));
 	for (int i = 0; i < _nFeatures; i++) {
 		for (int k = 0; k < _nData; k++) {
 			if ((uint8_t)dataset[k].In[i] == data[i]) ++catMatrix[i][dataset[k].Out];

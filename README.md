@@ -85,7 +85,7 @@ For **continuous data**, the method for fitting the classifier is:
 ```
 This enables to pre-process the dataset and prepare for prediction.
 
-For **categorical data**, there is no need to pre-process the dataset.
+For **categorical data**, there is no need to pre-process the dataset. But you can also do it, as it sometimes improves the results. Then, use the `predictCatFit` method.
 
 ## Predict values
 For **continuous data**: to predict a class, first create a features vector:
@@ -93,11 +93,11 @@ For **continuous data**: to predict a class, first create a features vector:
     std::vector<float> x;
     for (int j = 0; j < nFeatures; j++) x.push_back(/* the value of the j-th feature */);
 ```
-Then call the `predict`method:
+Then call the `predict` method:
 ```
 uint8_t predict = myNB.predict(x, dataset);
 ```
-You can choose to use Gaussian probability hypothesis and call
+You can choose to use Gaussian probabality hypothesis and call
 ```
 uint8_t predict = myNB.predictGau(x, dataset);
 ```
@@ -113,6 +113,8 @@ or directly call `predictCat` with the set of features as argument:
 ```
     uint8_t predict = myNB.predictCat({feature_1, feature_2, ... , feature_n}, dataset);
 ```
+
+If you used the `fit` method, then use here the `predictCatFit` method, with the same arguments.
 
 At the end, it is possible to free the memory occupied by the dataset, using
 ```
@@ -131,6 +133,6 @@ An example on how to categorize catagorical data. Estimate the favorite fast-foo
 An example on how to categorize continuous data using Gaussian probability.
 
 ## NB_TTGO
-If you have a TTGO T-Display, you can try this example to see the impact of the size of the training dataset on the classification performance (success rate). It graphically shows that the classification of 2D points in N sectors has varrying performance if the dataset is smaller and if the number of sectors grows.
+If you have a TTGO T-Display, you can try this example to see the impact of the size of the training dataset on the classifiation performance (success rate). It graphically shows that the classification of 2D points in N sectors has varrying performance if the dataset is smaller and if the number of sectors grows.
 
 Use buttons to change the size of the dataset and the number of sectors, touch GPIO 15 to rerun the current case.
