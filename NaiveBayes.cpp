@@ -33,6 +33,10 @@ void NB::countDataset (std::vector<Data> const &dataset) {
 
 // Set all data between 0 and 1
 int NB::normalizeDataset (std::vector<Data> &dataset) {
+	valMin.clear();
+	valMax.clear();
+	_dataset.clear();
+
 	for (int i = 0; i < _nFeatures; i++) {
 		valMin.push_back(MAX_float);
 		valMax.push_back(MIN_float);
@@ -49,12 +53,26 @@ int NB::normalizeDataset (std::vector<Data> &dataset) {
 		}
 	}
 
+	// // Normalize values
+	// for (int i = 0; i < _nData; i++) {
+	// 	for (int j = 0; j < _nFeatures; j++)
+	// 		dataset[i].In[j] = (dataset[i].In[j] - valMin[j]) /
+	// 		(valMax[j] - valMin[j]);
+	// }
 	// Normalize values
-	for (int i = 0; i < _nData; i++) {
-		for (int j = 0; j < _nFeatures; j++)
-			dataset[i].In[j] = (dataset[i].In[j] - valMin[j]) /
+	for (int i = 0; i < _nData; ++i) {
+		Data temp;
+		std::vector<float> x;
+		for (int j = 0; j < _nFeatures; ++j) {
+			float y = (dataset[i].In[j] - valMin[j]) /
 			(valMax[j] - valMin[j]);
+			x.push_back(y);			
+		}
+		temp.In = x;
+		temp.Out = dataset[i].Out;
+		_dataset.push_back(temp);
 	}
+
 	return 0;
 }
 
@@ -105,9 +123,7 @@ float NB::gaussProb(float x, float mean, float variance) {
 	return exp(-arg) / den;
 }
 
-/*   
-	PUBLIC METHODS   
-*/
+/*   PUBLIC METHODS   */
 
 // Method to call after defining the dataset
 void NB::fit (std::vector<Data> &dataset) {
@@ -233,7 +249,7 @@ uint8_t  NB::predictCat (std::vector<uint8_t> &data, std::vector<Data> const &da
 }
 
 // Predict a class for categorical data with fitting
-uint8_t  NB::predictCatFit (std::vector<uint8_t> &data, std::vector<Data> const &dataset) {
+uint8_t  NB::predictCatFit (std::vector<uint8_t> const &data, std::vector<Data> const &dataset) {
 	uint8_t bestClass = 255;
 	float bestProba = 0.0f;
 	//
@@ -242,9 +258,9 @@ uint8_t  NB::predictCatFit (std::vector<uint8_t> &data, std::vector<Data> const 
 	Serial.println("}");
 
 	// Normalize data
+	std::vector<float> dataNorm;
 	for (int i = 0; i < _nFeatures; i++)
-		data[i] = (data[i] - valMin[i]) /
-			(valMax[i] - valMin[i]);
+		dataNorm.push_back((data[i] - valMin[i]) / (valMax[i] - valMin[i]));
 
 	// Proba of each class
 	std::vector<uint16_t>nbClasses(_nClasses,0);
@@ -253,8 +269,11 @@ uint8_t  NB::predictCatFit (std::vector<uint8_t> &data, std::vector<Data> const 
 	// proba of each feature of the data for all classes
 	std::vector<std::vector<uint16_t>> catMatrix(_nFeatures , std::vector<uint16_t>(_nClasses, 0));
 	for (int i = 0; i < _nFeatures; i++) {
+		float coef = 0.5f / ((float)valMax[i] - (float)valMin[i]);
+		Serial.println(coef,7);
 		for (int k = 0; k < _nData; k++) {
-			if ((uint8_t)dataset[k].In[i] == data[i]) ++catMatrix[i][dataset[k].Out];
+			if (abs(dataset[k].In[i] - dataNorm[i]) < coef)
+				++catMatrix[i][dataset[k].Out];
 		}
 	}
 
@@ -281,7 +300,7 @@ uint8_t  NB::predictCatFit (std::vector<uint8_t> &data, std::vector<Data> const 
 	return bestClass;
 }
 
-// Predict a class for continuous data using Guassian probability
+// Predict a class for continuous data using Gaussian probability
 uint8_t  NB::predictGau (std::vector<uint8_t> const &data, std::vector<Data> const &dataset) {
 	uint8_t bestClass = 255;
 	float bestProba = 0.0f;
@@ -319,6 +338,60 @@ uint8_t  NB::predictGau (std::vector<uint8_t> const &data, std::vector<Data> con
 		float prod = (float)nbClasses[j] / _nData;
 		for (int i = 0; i < _nFeatures; i++)
 			prod *= gaussProb(data[i], meanMatrix[i][j], varMatrix[i][j]);
+		float proba = prod / sum;
+		Serial.printf("Class %d : probability %6.2f%%\n", j, proba * 100.0f);
+		if (proba > bestProba) {
+			bestProba = proba;
+			bestClass = j;
+		}
+	}
+
+	return bestClass;
+}
+
+// Predict a class for continuous data using Gaussian probability
+uint8_t  NB::predictGauFit (std::vector<uint8_t> &data, std::vector<Data> const &dataset) {
+	uint8_t bestClass = 255;
+	float bestProba = 0.0f;
+	//
+	Serial.print("\nFeatures : {");
+	for (uint8_t x : data) Serial.printf(" %d ", x);
+	Serial.println("}");
+
+	// Normalize data
+	std::vector<float> dataNorm;
+	for (int i = 0; i < _nFeatures; i++)
+		dataNorm.push_back((data[i] - valMin[i]) / (valMax[i] - valMin[i]));
+
+	// Number of data in each class
+	std::vector<uint8_t>nbClasses(_nClasses,0);
+	for (Data x : dataset) ++nbClasses[x.Out];
+
+	// Mean and variance for each feature
+	std::vector<std::vector<float>> meanMatrix(_nFeatures , std::vector<float>(_nClasses, 0));
+	for (int i = 0; i < _nFeatures; i++)
+		for (Data x : dataset)
+			meanMatrix[i][x.Out] += x.In[i] / nbClasses[x.Out];
+
+	std::vector<std::vector<float>> varMatrix(_nFeatures , std::vector<float>(_nClasses, 0));
+	for (int i = 0; i < _nFeatures; i++)
+		for (Data x : dataset)
+			varMatrix[i][x.Out] += pow(x.In[i] - meanMatrix[i][x.Out], 2) / nbClasses[x.Out];
+
+	// Compute denominator
+	float sum = 0.0f;
+	for (int j = 0; j < _nClasses; j++) {
+		float prod = (float)nbClasses[j] / _nData;
+		for (int i = 0; i < _nFeatures; i++) 
+			prod *= gaussProb(dataNorm[i], meanMatrix[i][j], varMatrix[i][j]);
+		sum += prod;
+	}
+
+	// Compute probability for each class
+	for (int j = 0; j < _nClasses; j++) {
+		float prod = (float)nbClasses[j] / _nData;
+		for (int i = 0; i < _nFeatures; i++)
+			prod *= gaussProb(dataNorm[i], meanMatrix[i][j], varMatrix[i][j]);
 		float proba = prod / sum;
 		Serial.printf("Class %d : probability %6.2f%%\n", j, proba * 100.0f);
 		if (proba > bestProba) {

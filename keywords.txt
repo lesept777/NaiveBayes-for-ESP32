@@ -20,6 +20,8 @@ fit	KEYWORD2
 predict	KEYWORD2
 predictCat	KEYWORD2
 predictCatFit	KEYWORD2
+predictGau	KEYWORD2
+predictGauFit	KEYWORD2
 destroyDataset	KEYWORD2
 
 #######################################

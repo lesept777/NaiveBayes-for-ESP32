@@ -53,11 +53,13 @@ public:
 	void     fit     (std::vector<Data> &);
 	uint8_t  predict (std::vector<float> &, std::vector<Data> &);
 	uint8_t  predictCat (std::vector<uint8_t> &, std::vector<Data> const&);
-	uint8_t  predictCatFit (std::vector<uint8_t> &, std::vector<Data> const&);
+	uint8_t  predictCatFit (std::vector<uint8_t> const&, std::vector<Data> const&);
 	uint8_t  predictGau (std::vector<uint8_t> const&, std::vector<Data> const&);
+	uint8_t  predictGauFit (std::vector<uint8_t> &, std::vector<Data> const&);
 	void     destroyDataset (std::vector<Data> &);
 
 private:
+	std::vector<Data> _dataset;
 	std::vector<float>valMin;
 	std::vector<float>valMax;
 	std::vector<int>  number;
