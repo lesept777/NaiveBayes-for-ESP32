@@ -50,12 +50,10 @@ public:
 	void     addData (std::vector<float> const&, uint8_t, std::vector<Data> &);
 	void     addData (std::vector<float> const&, std::vector<Data> &);
 	void     addDataCat (std::vector<uint8_t> const&, std::vector<Data> &);
-	void     fit     (std::vector<Data> &);
+	void     fit     (std::vector<Data> const&);
 	uint8_t  predict (std::vector<float> &, std::vector<Data> &);
-	uint8_t  predictCat (std::vector<uint8_t> &, std::vector<Data> const&);
-	uint8_t  predictCatFit (std::vector<uint8_t> const&, std::vector<Data> const&);
+	uint8_t  predictCat (std::vector<uint8_t> const&, std::vector<Data> const&);
 	uint8_t  predictGau (std::vector<uint8_t> const&, std::vector<Data> const&);
-	uint8_t  predictGauFit (std::vector<uint8_t> &, std::vector<Data> const&);
 	void     destroyDataset (std::vector<Data> &);
 
 private:
@@ -68,10 +66,10 @@ private:
 	bool     _learn;
 	int      createDataset    (std::vector<Data>);
 	void     countDataset     (std::vector<Data> const&);
-	int      normalizeDataset (std::vector<Data> &);
+	int      normalizeDataset (std::vector<Data> const &);
 	inline float computeDistance  (std::vector<float> const&, std::vector<Data> const&, int);
 	int      countNeighbours  (std::vector<float> const&, std::vector<Data> const&);
-	uint8_t  findBestClass    (std::vector<float> const&, std::vector<Data> &);
+	uint8_t  findBestClass    (std::vector<float> const&, std::vector<Data> const&);
 	float    gaussProb        (float, float, float);
 };
 
