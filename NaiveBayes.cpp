@@ -273,7 +273,7 @@ uint8_t  NB::predictCat (std::vector<uint8_t> const &data, std::vector<Data> con
 		float prod = (float)nbClasses[j] / _nData;
 		for (int i = 0; i < _nFeatures; i++) 
 			if (catMatrix[i][j] == 0) {
-				float prob = gaussProb(dataNorm[i], meanMatrix[i][j], varMatrix[i][j]);;
+				float prob = gaussProb(dataNorm[i], meanMatrix[i][j], varMatrix[i][j]);
 				prod *= prob;
 			} else {
 				prod *= (float)catMatrix[i][j] / nbClasses[j];
@@ -306,24 +306,24 @@ uint8_t  NB::predictGau (std::vector<uint8_t> const &data, std::vector<Data> con
 
 	// Number of data in each class
 	std::vector<uint8_t>nbClasses(_nClasses,0);
-	for (Data x : dataset) ++nbClasses[x.Out];
+	for (Data x : _dataset) ++nbClasses[x.Out];
 
 	// Mean and variance for each feature
 	std::vector<std::vector<float>> meanMatrix(_nFeatures , std::vector<float>(_nClasses, 0));
 	for (int i = 0; i < _nFeatures; i++)
-		for (Data x : dataset)
+		for (Data x : _dataset)
 			meanMatrix[i][x.Out] += x.In[i] / nbClasses[x.Out];
 
 	std::vector<std::vector<float>> varMatrix(_nFeatures , std::vector<float>(_nClasses, 0));
 	for (int i = 0; i < _nFeatures; i++)
-		for (Data x : dataset)
+		for (Data x : _dataset)
 			varMatrix[i][x.Out] += pow(x.In[i] - meanMatrix[i][x.Out], 2) / nbClasses[x.Out];
 
 	// Compute denominator
 	float sum = 0.0f;
 	for (int j = 0; j < _nClasses; j++) {
 		float prod = (float)nbClasses[j] / _nData;
-		for (int i = 0; i < _nFeatures; i++) 
+		for (int i = 0; i < _nFeatures; i++)
 			prod *= gaussProb(dataNorm[i], meanMatrix[i][j], varMatrix[i][j]);
 		sum += prod;
 	}
