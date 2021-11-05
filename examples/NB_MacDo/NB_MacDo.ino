@@ -31,6 +31,7 @@ void setup() {
   myNB.addDataCat({MacOS,   Pytorch,    KFC} , dataset);
 
   // Test
+  myNB.fit(dataset);
   uint8_t predict;
   predict = myNB.predictCat({MacOS, Pytorch}, dataset);
   Serial.printf("Prediction %d\n", predict);
