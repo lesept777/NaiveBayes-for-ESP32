@@ -101,7 +101,7 @@ uint8_t NB::findBestClass (std::vector<float> const &data, std::vector<Data> con
 		float likelihood = (float)nOk / number[classe];
 		float priorProba = (float)number[classe] / _nData;
 		float postProba = likelihood * priorProba / marginal;
-		Serial.printf("Class %d : probability %.2f%\n", classe, 100 * postProba);
+		// Serial.printf("Class %d : probability %.2f%\n", classe, 100 * postProba);
 
 		if (postProba > best) {
 			best = postProba;
@@ -139,14 +139,14 @@ uint8_t NB::predict (std::vector<float> &data, std::vector<Data> &dataset) {
 	// 1: search a valid neighbourhood
 	const int minNeighbours = _nData / 13;
 	_radius = 0.05;
-	_neighbours = countNeighbours(data, dataset);
+	_neighbours = countNeighbours(data, _dataset);
 	while (_neighbours < minNeighbours) {
 		_radius += 0.05;
-		_neighbours = countNeighbours(data, dataset);
+		_neighbours = countNeighbours(data, _dataset);
 	}
 
 	// 2: select best class
-	int best = findBestClass (data, dataset);
+	int best = findBestClass (data, _dataset);
 
 	// 3: add the new data to the dataset 
 	// does not always improve learning...
