@@ -138,5 +138,5 @@ If you have a TTGO T-Display, you can try this example to see the impact of the 
 Use buttons to change the size of the dataset and the number of sectors, touch GPIO 15 to rerun the current case.
 
 In case there is nothing on the display it means you need to select the correct driver for the TTGO. Open the file C:\Users\xxxxxx\Documents\Arduino\libraries\TFT_eSPI\User_Setup_Select.h :
-– comment the line #include <User_Setup.h>,
-– uncomment the line #include <User_Setups/Setup25_TTGO_T_Display.h> .
+* comment the line #include <User_Setup.h>,
+* uncomment the line #include <User_Setups/Setup25_TTGO_T_Display.h> .
