@@ -29,6 +29,7 @@ void setup() {
   myNB.addDataCat({178,   71,   KFC} , dataset);
 
   // Test
+  myNB.fit(dataset);
   uint8_t predict;
   predict = myNB.predictGau({177, 72}, dataset);
   Serial.printf("Prediction %d\n", predict);
